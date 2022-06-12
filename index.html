@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Road to Happy ending</title>
+  </head>
+  <body>
+    <div class="container-fluid p-0 m-0">
+      <div class="content row p-0 m-0">
+        <div class="col-sm p-0 m-0 d-flex content-left flex-column">
+          <div class="count">
+            <div class="road-to-100m d-flex">
+              <button type="button" class="btn btn-count">
+                Hành trình 100M
+              </button>
+              <span class="d-inline-flex align-items-center ml-4"
+                >Hiện tại:</span
+              >
+              <div
+                class="text-center mount d-flex align-items-center justify-content-center current-money"
+              ></div>
+            </div>
+            <div class="input-group d-flex flex-row">
+              <input
+                type="text"
+                class="form-control add-money"
+                aria-label="Amount (to the nearest dollar)"
+              />
+              <button type="button" class="btn btn-success add-love">
+                Thêm yêu thương
+              </button>
+            </div>
+          </div>
+          <div class="emiu">
+            <img src="./asset/emiu.jpg" alt="" srcset="" />
+          </div>
+        </div>
+        <div class="col-sm p-0 m-0 d-flex content-right flex-row">
+          <div class="history">
+            <button type="button" class="btn btn-list">Danh sách</button>
+            <div class="list-table-history">
+              <table class="table table-list">
+                <thead>
+                  <tr>
+                    <th scope="col">Tình cảm</th>
+                    <th scope="col">Thời gian trao tình cảm</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="http://code.jquery.com/jquery-1.4.2.min.js"
+    ></script>
+    <script type="text/javascript" src="./script.js"></script>
+  </body>
+</html>
