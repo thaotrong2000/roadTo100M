@@ -2,36 +2,42 @@ let tableHistory = [];
 
 console.log(new Date().toLocaleString());
 $(document).ready(function () {
-  //   check exist LocalStorage: currentMoney
-  const checkLocalStorage = localStorage.getItem("currentMoney");
-  if (!checkLocalStorage) {
-    localStorage.setItem("currentMoney", "200.000");
-  }
-  $(".current-money").text(localStorage.getItem("currentMoney"));
+  fetch("https://demo-thao.herokuapp.com/api/getMoney")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      $(".current-money").text(
+        data.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      );
+    });
 
   var temp = "";
 
-  //   check exist LocalStorage: listHistory
+  fetch("https://demo-thao.herokuapp.com/api/getAll")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      tableHistory = data;
 
-  const checkListStory = localStorage.getItem("listHistory");
-  if (checkListStory) {
-    tableHistory = JSON.parse(checkListStory);
-  }
+      temp = "";
+
+      //     update list History
+      for (let i = tableHistory.length - 1; i >= 0; i--) {
+        temp += `<tr class="table-success">
+       <th scope="row">${tableHistory[i].money}</th>
+       <td>${tableHistory[i].time}</td>
+     </tr>`;
+      }
+
+      $(".table-list tbody").html(temp);
+    });
 
   //   When click + "add" money
   $(".add-love").click(function () {
     let currentMoney = Number($(".current-money").text().replaceAll(".", ""));
     let valueAdd = Number($("input").val().replaceAll(".", ""));
-    console.log(valueAdd);
-    console.log(currentMoney);
     let newMoney = currentMoney + valueAdd;
-    console.log(newMoney);
     $(".current-money").text(
-      newMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-    );
-
-    localStorage.setItem(
-      "currentMoney",
       newMoney.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     );
 
@@ -40,12 +46,22 @@ $(document).ready(function () {
       time: new Date().toLocaleString(),
     });
 
-    console.log(tableHistory);
+    $.ajax({
+      type: "post",
+      url: "https://demo-thao.herokuapp.com/api/post",
+      data: JSON.stringify({
+        money: valueAdd.toString().replaceAll(".", ""),
+        time: new Date().toLocaleString(),
+      }),
+      contentType: "application/json; charset=utf-8",
+      traditional: true,
+      success: function (data) {},
+    });
 
     temp = "";
 
     //     update list History
-    for (let i = 0; i < tableHistory.length; i++) {
+    for (let i = tableHistory.length - 1; i >= 0; i--) {
       temp += `<tr class="table-success">
        <th scope="row">${tableHistory[i].money}</th>
        <td>${tableHistory[i].time}</td>
@@ -53,18 +69,7 @@ $(document).ready(function () {
     }
 
     $(".table-list tbody").html(temp);
-
-    localStorage.setItem("listHistory", JSON.stringify(tableHistory));
   });
-
-  //   update time when add money
-
-  for (let i = 0; i < tableHistory.length; i++) {
-    temp += `<tr class="table-success">
-    <th scope="row">${tableHistory[i].money}</th>
-    <td>${tableHistory[i].time}</td>
-  </tr>`;
-  }
 
   $(".table-list tbody").html(temp);
 });
